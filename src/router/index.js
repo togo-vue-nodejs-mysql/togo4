@@ -13,9 +13,10 @@ import WorkSpace from '../views/server/WorkSpace.vue'
 
 import TableUser from '../views/server/Table/TableUser.vue'
 import TableHotel from '../views/server/Table/TableHotel.vue'
-import TableTreffic from '../views/server/Table/TableTreffic.vue'
+import TableTraffic from '../views/server/Table/TableTraffic.vue'
 import TableRoom from '../views/server/Table/TableRoom.vue'
 import TableCity from '../views/server/Table/TableCity.vue'
+import TableGuide from "@/views/server/Table/TableGuide";
 
 
 
@@ -46,9 +47,9 @@ const routes = [
     },
 
     {
-        path: '/TableTreffic',
-        name: 'TableTreffic',
-        component: TableTreffic
+        path: '/TableTraffic',
+        name: 'TableTraffic',
+        component: TableTraffic
     },
     {
         path: '/TableHotel',
@@ -64,6 +65,11 @@ const routes = [
         path: '/TableCity',
         name: 'TableCity',
         component: TableCity
+    },
+    {
+        path: '/TableGuide',
+        name: 'TableGuide',
+        component: TableGuide
     },
 
 

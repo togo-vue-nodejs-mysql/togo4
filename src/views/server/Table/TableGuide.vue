@@ -1,45 +1,34 @@
 <template>
     <div>
-        
         <el-card shadow="always" style="margin: 20px">
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item :to="{ path: '/WorkSpace' }">工作台</el-breadcrumb-item>
                 <el-breadcrumb-item><a href="/TableUser">表格管理</a></el-breadcrumb-item>
-                <el-breadcrumb-item>房间管理</el-breadcrumb-item>
+                <el-breadcrumb-item>攻略管理</el-breadcrumb-item>
             </el-breadcrumb>
             <el-row>
-                <el-col :span="4">
-                    <div class="grid-content bg-purple">
-                        <h1 style="margin-top: 10px">Table-Room</h1>
-                    </div>
-                </el-col>
-                <el-col :span="19">
-                    <div class="grid-content bg-purple-light">
-                        <myFind/>
-                    </div>
-                </el-col>
+                <el-col :span="4"><div class="grid-content bg-purple">
+                    <h1 style="margin-top: 10px">Table-Guide</h1>
+                </div></el-col>
+                <el-col :span="19"><div class="grid-content bg-purple-light">
+                    <myFind/>
+                </div></el-col>
             </el-row>
         </el-card>
         
         <el-card shadow="always" style="margin: 20px">
-            <v-data-table :headers="headers" :items="rooms" sort-by="calories">
+            <v-data-table :headers="headers" :items="guides" sort-by="calories">
                 <template v-slot:top>
                     <v-toolbar flat>
-                        <v-toolbar-title>房间表</v-toolbar-title>
+                        <v-toolbar-title>攻略表</v-toolbar-title>
                         <v-divider class="mx-4" inset vertical></v-divider>
                         <v-spacer></v-spacer>
                         <v-dialog v-model="dialog" max-width="500px">
                             <template v-slot:activator="{ on, attrs }">
                                 <v-btn color="primary" dark class="mb-2">刷新</v-btn>
                                 <div style="width: 10px"></div>
-                                <v-btn
-                                    color="primary"
-                                    dark
-                                    class="mb-2"
-                                    v-bind="attrs"
-                                    v-on="on"
-                                >
-                                    添加房间
+                                <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
+                                    新建攻略
                                 </v-btn>
                             </template>
                             
@@ -52,40 +41,38 @@
                                     <v-container>
                                         <v-row>
                                             <v-col cols="12" sm="6" md="4">
-                                                <v-text-field
-                                                    v-model="editedItem.room_id"
-                                                    label="房间id"
-                                                ></v-text-field>
-                                            </v-col>
-                                            <v-col cols="12" sm="6" md="4">
-                                                <v-text-field
-                                                    v-model="editedItem.type"
-                                                    label="房间类型"
-                                                >
+                                                <v-text-field v-model="editedItem.guide_id" label="攻略id">
                                                 </v-text-field>
                                             </v-col>
                                             <v-col cols="12" sm="6" md="4">
-                                                <v-text-field
-                                                    v-model="editedItem.money"
-                                                    label="金额"
-                                                >
+                                                <v-text-field v-model="editedItem.nickname" label="昵称">
                                                 </v-text-field>
                                             </v-col>
                                             <v-col cols="12" sm="6" md="4">
-                                                <v-text-field
-                                                    v-model="editedItem.people"
-                                                    label="可入住人数"
-                                                >
+                                                <v-text-field v-model="editedItem.content" label="内容">
+                                                </v-text-field>
+                                            </v-col>
+                                            
+                                            <v-col cols="12" sm="6" md="4">
+                                                <v-text-field v-model="editedItem.hot" label="热度">
                                                 </v-text-field>
                                             </v-col>
                                             <v-col cols="12" sm="6" md="4">
-                                                <v-text-field
-                                                    v-model="editedItem.count"
-                                                    label="房间剩余数"
-                                                >
+                                                <v-text-field v-model="editedItem.see" label="点击数">
                                                 </v-text-field>
                                             </v-col>
-                                        
+                                            <v-col cols="12" sm="6" md="4">
+                                                <v-text-field v-model="editedItem.reply" label="评论数">
+                                                </v-text-field>
+                                            </v-col>
+                                            <v-col cols="12" sm="6" md="4">
+                                                <v-text-field v-model="editedItem.image" label="图片">
+                                                </v-text-field>
+                                            </v-col>
+                                            <v-col cols="12" sm="6" md="6">
+                                                <el-date-picker v-model="editedItem.date" type="datetime" label="时间">
+                                                </el-date-picker>
+                                            </v-col>
                                         </v-row>
                                     </v-container>
                                 </v-card-text>
@@ -98,8 +85,8 @@
                             </v-card>
                         </v-dialog>
                         <v-dialog v-model="dialogDelete" max-width="500px">
-                            <v-card>
-                                <v-card-title class="text-h5">确定删除？</v-card-title>
+                            <v-card style="padding: 20px">
+                                <v-card-title class="text-h5">确定删除改行程？</v-card-title>
                                 <v-card-actions>
                                     <v-spacer></v-spacer>
                                     <v-btn color="blue darken-1" text @click="closeDelete">
@@ -127,13 +114,13 @@
                     <v-btn color="primary" @click="my_init"> Reset</v-btn>
                 </template>
             </v-data-table>
-            <!--    </v-card>-->
         </el-card>
     </div>
 </template>
 
 
 <script>
+    // import Qs from 'qs'
     import myFind from "@/components/server/Find";
     
     export default {
@@ -145,45 +132,62 @@
             dialogDelete: false,
             headers: [
                 {
-                    text: "房间编号",
+                    text: "攻略id",
                     align: "start",
                     sortable: true,
-                    value: "room_id",
+                    value: "guide_id",
                 },
                 {
-                    text: "房间类型",
-                    value: "type",
+                    text: "昵称",
+                    value: "nickname",
                 },
                 {
-                    text: "金额",
-                    value: "money",
+                    text: "内容",
+                    value: "content",
                 },
                 {
-                    text: "可入住人数",
-                    value: "people",
+                    text: "时间",
+                    value: "date",
                 },
                 {
-                    text: "房间剩余数",
-                    value: "count",
+                    text: "热度",
+                    value: "hot",
                 },
-                
+                {
+                    text: "点击数",
+                    value: "see",
+                },
+                {
+                    text: "评论数",
+                    value: "reply",
+                },
+                {
+                    text: "图片",
+                    value: "image",
+                },
                 {text: "操作", value: "actions", sortable: false},
             ],
-            rooms: [],
+            guides: [],
             editedIndex: -1,
             editedItem: {
-                room_id: "",
-                type: "大床房",
-                money: 333333,
-                people: 123,
-                count: 18,
+                "guide_id": "",
+                "nickname": "昵称",
+                "content": "内容",
+                "date": "2021-12-02 15:10:45",
+                "hot": 100,
+                "see": 100,
+                "reply": 100,
+                "image": "图片"
             },
             defaultItem: {
-                room_id: "",
-                type: "大床房",
-                money: 333333,
-                people: 123,
-                count: 18,
+                "guide_id": "",
+                "nickname": "昵称",
+                "content": "内容",
+                "date": "2021-12-02 15:10:45",
+                "hot": 100,
+                "see": 100,
+                "reply": 100,
+                "image": "图片"
             },
         }),
         
@@ -222,21 +226,24 @@
             my_init() {
                 // 初始化表格数据
                 // 从后台获取数据
-                this.$http.get("room/getAllRoom").then((res) => {
-                    this.rooms = res.data;
+                this.$http.get("guide/getAllGuide").then((res) => {
+                    this.guides = res.data;
                 });
             },
             
             my_add() {
-                let myRoom = new URLSearchParams();
-                const room = this.editedItem;
-                myRoom.append("room_id", room.room_id);
-                myRoom.append("type", room.type);
-                myRoom.append("money", room.money);
-                myRoom.append("people", room.people);
-                myRoom.append("count", room.count);
-                console.log(room);
-                this.$http.post(`room/addRoom`, myRoom).then((res) => {
+                let myGuide = new URLSearchParams();
+                const guide = this.editedItem;
+                // var ta = guide.start_time;
+                myGuide.append("nickname", guide.nickname);
+                myGuide.append("content", guide.content);
+                myGuide.append("date", guide.date);
+                myGuide.append("hot", guide.hot);
+                myGuide.append("see", guide.see);
+                myGuide.append("reply", guide.reply);
+                myGuide.append("image", guide.image);
+                console.log(guide);
+                this.$http.post(`guide/addGuide`, myGuide).then((res) => {
                     console.log("res.data-res.data-res.data");
                     console.log(res.data);
                     if (res.data.insertId > 0) {
@@ -255,15 +262,18 @@
             },
             
             my_update() {
-                let myRoom = new URLSearchParams();
-                const room = this.editedItem;
-                myRoom.append("room_id", room.room_id);
-                myRoom.append("type", room.type);
-                myRoom.append("money", room.money);
-                myRoom.append("people", room.people);
-                myRoom.append("count", room.count);
-                console.log(room);
-                this.$http.post(`room/updateRoomById`, myRoom).then((res) => {
+                let myGuide = new URLSearchParams();
+                const guide = this.editedItem;
+                myGuide.append("guide_id", guide.guide_id);
+                myGuide.append("nickname", guide.nickname);
+                myGuide.append("content", guide.content);
+                myGuide.append("date", guide.date);
+                myGuide.append("hot", guide.hot);
+                myGuide.append("see", guide.see);
+                myGuide.append("reply", guide.reply);
+                myGuide.append("image", guide.image);
+                console.log(guide);
+                this.$http.post(`guide/updateGuideById`, myGuide).then((res) => {
                     console.log(res.data);
                     if (res.data.changedRows > 0) {
                         this.$message({
@@ -282,11 +292,11 @@
             
             my_deleteId() {
                 console.log("deleteById-deleteById-deleteById-deleteById");
-                let myRoomId = new URLSearchParams();
-                let uid = this.editedItem.room_id;
-                myRoomId.append("room_id", uid);
+                let myGuideId = new URLSearchParams();
+                let uid = this.editedItem.guide_id;
+                myGuideId.append("guide_id", uid);
                 console.log(uid);
-                this.$http.post(`room/deleteById`, myRoomId).then((res) => {
+                this.$http.post(`guide/deleteById`, myGuideId).then((res) => {
                     console.log(res.data);
                     if (res.data.affectedRows > 0) {
                         this.$message({
@@ -304,19 +314,19 @@
             },
             
             editItem(item) {
-                this.editedIndex = this.rooms.indexOf(item);
+                this.editedIndex = this.guides.indexOf(item);
                 this.editedItem = Object.assign({}, item);
                 this.dialog = true;
             },
             
             deleteItem(item) {
-                this.editedIndex = this.rooms.indexOf(item);
+                this.editedIndex = this.guides.indexOf(item);
                 this.editedItem = Object.assign({}, item);
                 this.dialogDelete = true;
             },
             
             deleteItemConfirm() {
-                // this.rooms.splice(this.editedIndex, 1);
+                // this.guides.splice(this.editedIndex, 1);
                 this.closeDelete();
                 // console.log(this.editedItem);
                 this.my_deleteId();
@@ -340,13 +350,13 @@
             
             save() {
                 if (this.editedIndex > -1) {
-                    // Object.assign(this.rooms[this.editedIndex], this.editedItem);
+                    // Object.assign(this.guides[this.editedIndex], this.editedItem);
                     console.log("my_updateId-my_updateId");
                     this.my_update();
                 } else {
-                    console.log("addRoom-addRoom-addRoom-addRoom");
+                    console.log("addGuide-addGuide-addGuide-addGuide");
                     this.my_add();
-                    // this.rooms.push(this.editedItem);
+                    // this.guides.push(this.editedItem);
                 }
                 this.close();
             },
