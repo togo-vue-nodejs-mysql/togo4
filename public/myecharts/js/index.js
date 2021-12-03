@@ -1,4 +1,6 @@
 // 每一个图表都是立即执行函数，防止myChart、option等变量污染
+
+
 // 柱状图模块1
 (function() {
   // 1实例化对象
@@ -25,13 +27,13 @@
       {
         type: "category",
         data: [
-          "旅游行业",
-          "教育培训",
-          "游戏行业",
-          "医疗行业",
-          "电商行业",
-          "社交行业",
-          "金融行业"
+          "华中地区",
+          "华北地区",
+          "华东地区",
+          "华南地区",
+          "东北地区",
+          "西南地区",
+          "西北地区",
         ],
         axisTick: {
           alignWithLabel: true
@@ -72,7 +74,7 @@
     ],
     series: [
       {
-        name: "直接访问",
+        name: "欢迎程度",
         type: "bar",
         barWidth: "35%",
         data: [200, 300, 300, 900, 1500, 1200, 600],
@@ -90,6 +92,9 @@
     myChart.resize();
   });
 })();
+
+
+
 // 柱状图2
 (function() {
   var myColor = ["#1089E7", "#F57474", "#56D0E3", "#F8B448", "#8B78F6"];
@@ -111,7 +116,7 @@
       {
         type: "category",
         inverse: true,
-        data: ["HTML5", "CSS3", "javascript", "VUE", "NODE"],
+        data: ["北京", "上海", "广州", "深圳", "杭州"],
         // 不显示y轴的线
         axisLine: {
           show: false
@@ -126,7 +131,7 @@
         },
       },
       {
-        data: [702, 350, 610, 793, 664],
+        data: [972, 890, 710, 693, 464],
         inverse: true,
         // 不显示y轴的线
         axisLine: {
@@ -146,7 +151,7 @@
       {
         name: "条",
         type: "bar",
-        data: [70, 34, 60, 78, 69],
+        data: [97, 89, 71, 69, 46],
         yAxisIndex: 0,
         // 修改第一组柱子的圆角
         itemStyle: {
@@ -193,6 +198,8 @@
     myChart.resize();
   });
 })();
+
+
 // 折线图1模块制作
 (function(){
   var yearData = [
@@ -291,7 +298,7 @@
     },
     series: [
       {
-        name: "新增粉丝",
+        name: "注册用户",
         type: "line",
         // true 可以让我们的折线显示带有弧度
         smooth: true,
@@ -311,6 +318,9 @@
     myChart.resize();
   });
 })();
+
+
+
 // 折线图2 模块制作
 (function() {
   var myChart = echarts.init(document.querySelector(".line2 .chart"));
@@ -682,7 +692,6 @@
           { value: 25, name: "河北" },
           { value: 20, name: "江苏" },
           { value: 25, name: "浙江" },
-          { value: 30, name: "四川" },
           { value: 42, name: "湖北" }
         ]
       }

@@ -16,7 +16,7 @@
             
             <!-- 导航 -->
             <el-menu router style="margin-left: -20px; font-size: 50px">
-                <el-menu-item index="/WorkSpace">
+                <el-menu-item index="/">
                     <i class="el-icon-menu" style="margin-right: 20px"></i>
                     <span slot="title">仪表盘</span>
                 </el-menu-item>
@@ -33,13 +33,13 @@
                         <el-menu-item index="/TableTraffic">行程表管理</el-menu-item>
                     </el-menu-item-group>
                 </el-submenu>
-                <el-menu-item index="3">
+                <el-menu-item index="/Handle">
                     <i class="el-icon-s-management" style="margin-right: 20px"></i>
-                    <span slot="title">操作数据</span>
+                    <span slot="title">公告栏</span>
                 </el-menu-item>
-                <el-menu-item index="4">
+                <el-menu-item index="/" @click="toECharts">
                     <i class="el-icon-s-marketing" style="margin-right: 20px"></i>
-                    <span slot="title">数据图表</span>
+                    <span slot="title" >数据图表</span>
                 </el-menu-item>
             </el-menu>
         </v-navigation-drawer>
@@ -73,7 +73,12 @@
         data: () => ({
             drawer: true,
         }),
-        methods: {},
+        methods: {
+            toECharts(){
+                window.open('http://localhost:8080/myecharts/chartIndex.html','_self' )
+            }
+        },
+        
     };
 </script>
 

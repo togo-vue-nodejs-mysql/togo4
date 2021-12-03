@@ -65,7 +65,6 @@
                     </div>
                     <div class="grid-content bg-purple">
                         <el-card shadow="always" style="margin-left: 20px">
-                            <chart-move/>
                         </el-card>
                     </div>
                 </el-col>
@@ -85,8 +84,6 @@
 <script>
     import ChartLine from "@/components/server/partChart/chartLint";
     import Chip from "@/components/server/Chip.vue";
-    import ChartMove from "@/components/server/partChart/chartMove";
-    import echarts from '@/assets/js/echarts/CalendarCharts'; // 路径改成自己的
 
     
     export default {
@@ -103,7 +100,6 @@
             this.$refs.chart_line_one.initChart(name, xData, yData);
         },
         components: {
-            ChartMove,
             Chip,
             ChartLine,
         },

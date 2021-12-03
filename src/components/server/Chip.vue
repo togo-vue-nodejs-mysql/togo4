@@ -1,7 +1,7 @@
 <template>
     
     <div>
-        <v-row justify="center">
+        <v-row justify="center" style="padding: 0;">
             <v-col cols="12" sm="7" md="6" lg="5">
                 <v-sheet elevation="10" rounded="xl" width="300" style="margin-left: -90px; margin-top: 10px;">
                     

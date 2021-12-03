@@ -10,6 +10,7 @@ import VueRouter from 'vue-router'
 
 import ServerMain from '../views/server/ServerMain.vue'
 import WorkSpace from '../views/server/WorkSpace.vue'
+import Handle from "@/views/server/Handle";
 
 import TableUser from '../views/server/Table/TableUser.vue'
 import TableHotel from '../views/server/Table/TableHotel.vue'
@@ -17,6 +18,7 @@ import TableTraffic from '../views/server/Table/TableTraffic.vue'
 import TableRoom from '../views/server/Table/TableRoom.vue'
 import TableCity from '../views/server/Table/TableCity.vue'
 import TableGuide from "@/views/server/Table/TableGuide";
+
 
 
 
@@ -29,14 +31,19 @@ const routes = [
     //     component: Home
     // },
     {
-        path: '/',
+        path: '/ServerMain',
         name: 'ServerMain',
-        component: ServerMain,
+        component: ServerMain
     },
     {
-        path: '/WorkSpace',
+        path: '/',
         name: 'WorkSpace',
         component: WorkSpace,
+    },
+    {
+        path: '/Handle',
+        name: 'Handle',
+        component: Handle,
     },
 
 
