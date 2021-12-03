@@ -6,6 +6,16 @@
         <el-breadcrumb-item><a href="/">表格管理</a></el-breadcrumb-item>
         <el-breadcrumb-item>用户管理</el-breadcrumb-item>
       </el-breadcrumb>
+        
+        <v-alert
+            icon="mdi-shield-lock-outline"
+            prominent
+            text
+            type="info"
+            style="margin-top: 20px"
+        >
+            该数据被保护中Sed augue ipsum, egestas nec, vestibulum et, malesuada adipiscing, dui. Aenean ut eros et nisl sagittis vestibulum. Sed aliquam ultrices mauris. Donec vitae orci sed dolor rutrum auctor.
+        </v-alert>
     </el-card>
 
     <el-card shadow="always" style="margin: 20px">
